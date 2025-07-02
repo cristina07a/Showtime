@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Festival index{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic text-center font-bold pt-4">Festival index</h1>
+
+    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-8">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>location</th>
+                <th>start_date</th>
+                <th>end_date</th>
+                <th>bands</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for festival in festivals %}
+                <tr class="hover:bg-base-300">
+                    <td>{{ festival.id }}</td>
+                    <td>{{ festival.name }}</td>
+                    <td>{{ festival.location }}</td>
+                    <td>{{ festival.startDate |date('d-m-Y') }}</td>
+                    <td>{{ festival.endDate|date('d-m-Y') }}</td>
+                    <td>{% for bands in festival.bands %}
+                            {{ bands.name|join(' ') }}{% endfor %}
+                    </td>
+                    </td>
+                    <td>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_festival_show', {'id': festival.id}) }}'">
+                            Show
+                        </button>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_festival_edit', {'id': festival.id}) }}'">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_festival_new') }}'"> Create new
+        </button>
+    </div>
+    </div>
+
+{% endblock %}

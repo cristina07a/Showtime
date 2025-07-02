@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Band index{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic text-center font-bold pt-4">Band index</h1>
+
+    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-8">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>genre</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for band in bands %}
+                <tr class="hover:bg-base-300">
+                    <td>{{ band.id }}</td>
+                    <td>{{ band.name }}</td>
+                    <td>{{ band.musicGenre.value }}</td>
+                    <td>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_band_show', {'id': band.id}) }}'"> Show
+                        </button>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_band_edit', {'id': band.id}) }}'"> Edit
+                        </button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_band_new') }}'"> Create new
+        </button>
+    </div>
+    </div>
+
+{% endblock %}

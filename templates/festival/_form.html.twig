@@ -1,0 +1,109 @@
+<div class="max-w-md mx-auto">
+    {{ form_start(form, {'attr': {'class': 'space-y-6 bg-base-100 p-8 rounded-box border border-base-content/5 m-8'}}) }}
+
+    <!-- Name Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Festival Name</span>
+        </label>
+        {{ form_widget(form.name, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter festival name'
+            }
+        }) }}
+        {% if form.name.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.name.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- Location Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Location</span>
+        </label>
+        {{ form_widget(form.location, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter festival location'
+            }
+        }) }}
+        {% if form.location.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.location.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- startDate Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Start date</span>
+        </label>
+        {{ form_widget(form.startDate, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter festival start date'
+            }
+        }) }}
+        {% if form.startDate.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.startDate.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- endDate Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">End date</span>
+        </label>
+        {{ form_widget(form.endDate, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter festival end date'
+            }
+        }) }}
+        {% if form.location.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.endDate.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- band Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Band</span>
+        </label>
+        {{ form_widget(form.bands, {
+            'attr': {
+                'class': 'input input-bordered w-full h-56',
+                'placeholder': 'Choose bands'
+            }
+        }) }}
+        {#        <div> #}
+        {#            {% for band in bands %} #}
+        {#            <div> #}
+        {#                <span>{{ band.name }}</span> #}
+        {#                <button ></button> #}
+        {#            </div> #}
+        {#        </div> #}
+        {% if form.location.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.bands.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+
+    <!-- Submit Button -->
+    <div class="form-control mt-6">
+        <button type="submit" class="btn btn-outline w-full">
+            {{ button_label|default('Save') }}
+        </button>
+    </div>
+    {{ form_end(form) }}
+</div>
