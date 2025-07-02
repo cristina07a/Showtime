@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Band{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic font-bold text-center pt-4">Edit band with index {{ band.id }}</h1>
+
+    {{ include('band/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <div class="flex gap-2 mt-4 justify-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_band_index') }}'"> Back to list
+        </button>
+        {{ include('band/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

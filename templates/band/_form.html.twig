@@ -1,0 +1,47 @@
+<div class="max-w-md mx-auto">
+    {{ form_start(form, {'attr': {'class': 'space-y-6 bg-base-100 p-8 rounded-box border border-base-content/5 m-8'}}) }}
+
+    <!-- Name Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Band Name</span>
+        </label>
+        {{ form_widget(form.name, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter band name'
+            }
+        }) }}
+        {% if form.name.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.name.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- Music Genre Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Music Genre</span>
+        </label>
+        {{ form_widget(form.musicGenre, {
+            'attr': {
+                'class': 'select select-bordered w-full'
+            }
+        }) }}
+        {% if form.musicGenre.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.musicGenre.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-control mt-6">
+        <button type="submit" class="btn btn-outline w-full">
+            {{ button_label|default('Save') }}
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+</div>

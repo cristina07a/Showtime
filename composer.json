@@ -42,8 +42,10 @@
         "symfony/validator": "7.3.*",
         "symfony/web-link": "7.3.*",
         "symfony/yaml": "7.3.*",
+        "symfonycasts/tailwind-bundle": "^0.10.0",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "ext-http": "*"
     },
     "config": {
         "allow-plugins": {
@@ -97,6 +99,7 @@
         }
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.75",
         "phpunit/phpunit": "^11.5",
         "symfony/browser-kit": "7.3.*",
         "symfony/css-selector": "7.3.*",
