@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\band;
+use App\Entity\Band;
 use App\Entity\Festival;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

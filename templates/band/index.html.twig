@@ -3,10 +3,12 @@
 {% block title %}Band index{% endblock %}
 
 {% block content %}
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_upward,arrow_downward"/>
     <h1 class="text-xl italic text-center font-bold pt-4">Band index</h1>
 
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-8">
-        <table class="table">
+    <div class="overflow-y-auto h-96 rounded-box border border-base-content/5 bg-base-100 m-8 ">
+        <table class="table-pin-rows table">
             <thead>
             <tr>
                 <th>Id</th>
