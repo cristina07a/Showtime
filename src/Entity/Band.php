@@ -7,6 +7,7 @@ use App\Repository\BandRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints;
 
 #[ORM\Entity(repositoryClass: BandRepository::class)]
 class Band
@@ -17,9 +18,17 @@ class Band
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Constraints\NotBlank(message: 'Introdu un nume!')]
+    #[Constraints\Length(
+        min: 5,
+        max: 50,
+        maxMessage: 'Numele trupei are lungimea de maxim {{ limit }} caractere',
+        minMessage: 'Numele trupei are lungimea de minim {{ limit }} caractere',
+    )]
     private ?string $name = null;
 
     #[ORM\Column(enumType: MusicGenre::class)]
+    #[Constraints\NotNull(message: 'Alege un gen muzical!')]
     private ?MusicGenre $musicGenre = null;
 
     /**

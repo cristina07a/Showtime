@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints;
+
 
 #[ORM\Entity(repositoryClass: FestivalRepository::class)]
 class Festival
@@ -17,21 +19,38 @@ class Festival
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Constraints\NotBlank(message: 'Introdu un nume!')]
+    #[Constraints\Length(
+        min: 5,
+        max: 50,
+        maxMessage: 'Numele trupei are lungimea de maxim {{ limit }} caractere',
+        minMessage: 'Numele trupei are lungimea de minim {{ limit }} caractere',
+    )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Constraints\NotBlank(message: 'Introdu o locatie!')]
+    #[Constraints\Length(
+        min: 5,
+        max: 50,
+        maxMessage: 'Numele locatiei are lungimea de maxim {{ limit }} caractere',
+        minMessage: 'Numele locatiei are lungimea de minim {{ limit }} caractere',
+    )]
     private ?string $location = null;
 
     /**
      * @var Collection<int, band>
      */
-    #[ORM\ManyToMany(targetEntity: band::class, inversedBy: 'festivals')]
+    #[ORM\ManyToMany(targetEntity: Band::class, inversedBy: 'festivals')]
     private Collection $bands;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Constraints\NotNull(message: 'Alege o data!')]
     private ?\DateTime $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Constraints\NotNull(message: 'Alegere o data!')]
+    #[Constraints\GreaterThan(propertyPath: 'startDate', message: 'start date < end date!')]
     private ?\DateTime $endDate = null;
 
     /**

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints;
+
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
@@ -15,12 +17,24 @@ class Booking
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Constraints\NotNull(message: 'Festival invalid!')]
     private ?festival $festival = null;
 
     #[ORM\Column(length: 255)]
+    #[Constraints\NotBlank(message: 'Introdu o adresa de mail!')]
+    #[Constraints\Email(
+        message: 'Emailul {{ value }} nu este valid!',
+    )]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Constraints\NotBlank(message: 'Introdu un nume!')]
+    #[Constraints\Length(
+        min: 5,
+        max: 50,
+        maxMessage: 'Numele are lungimea de maxim {{ limit }} caractere',
+        minMessage: 'Numele are lungimea de minim {{ limit }} caractere',
+    )]
     private ?string $fullName = null;
 
     public function getId(): ?int

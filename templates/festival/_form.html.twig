@@ -1,5 +1,5 @@
 <div class="max-w-md mx-auto">
-    {{ form_start(form, {'attr': {'class': 'space-y-6 bg-base-100 p-8 rounded-box border border-base-content/5 m-8'}}) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'space-y-6 bg-base-100 p-8 rounded-box border border-base-content/5 m-8'}}) }}
 
     <!-- Name Field -->
     <div class="form-control w-full">
@@ -66,7 +66,7 @@
                 'placeholder': 'Enter festival end date'
             }
         }) }}
-        {% if form.location.vars.errors|length > 0 %}
+        {% if form.endDate.vars.errors|length > 0 %}
             <label class="label">
                 <span class="label-text-alt text-error">{{ form.endDate.vars.errors[0].message }}</span>
             </label>
@@ -91,7 +91,7 @@
         {#                <button ></button> #}
         {#            </div> #}
         {#        </div> #}
-        {% if form.location.vars.errors|length > 0 %}
+        {% if form.bands.vars.errors|length > 0 %}
             <label class="label">
                 <span class="label-text-alt text-error">{{ form.bands.vars.errors[0].message }}</span>
             </label>
