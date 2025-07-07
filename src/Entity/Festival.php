@@ -63,6 +63,8 @@ class Festival
     {
         $this->bands = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->startDate = new \DateTime();
+        $this->endDate = new \DateTime('+1 day');
     }
 
     public function getId(): ?int
