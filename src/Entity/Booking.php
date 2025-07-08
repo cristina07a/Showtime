@@ -37,6 +37,16 @@ class Booking
     )]
     private ?string $fullName = null;
 
+    #[ORM\Column]
+    private ?float $paidAmount = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?ticket $tickets = null;
+
+    #[ORM\ManyToOne(inversedBy: 'bookings')]
+    private ?user $user = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +84,42 @@ class Booking
     public function setFullName(string $fullName): static
     {
         $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function getPaidAmount(): ?float
+    {
+        return $this->paidAmount;
+    }
+
+    public function setPaidAmount(float $paidAmount): static
+    {
+        $this->paidAmount = $paidAmount;
+
+        return $this;
+    }
+
+    public function getTickets(): ?ticket
+    {
+        return $this->tickets;
+    }
+
+    public function setTickets(?ticket $tickets): static
+    {
+        $this->tickets = $tickets;
+
+        return $this;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(?user $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -37,9 +37,16 @@ class Band
     #[ORM\ManyToMany(targetEntity: Festival::class, mappedBy: 'bands')]
     private Collection $festivals;
 
+    /**
+     * @var Collection<int, user>
+     */
+    #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'bands')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->festivals = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +101,30 @@ class Band
         if ($this->festivals->removeElement($festival)) {
             $festival->removeBand($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, user>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(user $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(user $user): static
+    {
+        $this->users->removeElement($user);
 
         return $this;
     }

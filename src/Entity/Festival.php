@@ -59,12 +59,29 @@ class Festival
     #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'festival')]
     private Collection $bookings;
 
+    /**
+     * @var Collection<int, Ticket>
+     */
+    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'festivals')]
+    private Collection $tickets;
+
+    #[ORM\Column(length: 255)]
+    private ?string $photo_path = null;
+
+    /**
+     * @var Collection<int, Code>
+     */
+    #[ORM\ManyToMany(targetEntity: Code::class, mappedBy: 'festivals')]
+    private Collection $codes;
+
     public function __construct()
     {
         $this->bands = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime('+1 day');
+        $this->tickets = new ArrayCollection();
+        $this->codes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,6 +186,75 @@ class Festival
             if ($booking->getFestival() === $this) {
                 $booking->setFestival(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ticket>
+     */
+    public function getTickets(): Collection
+    {
+        return $this->tickets;
+    }
+
+    public function addTicket(Ticket $ticket): static
+    {
+        if (!$this->tickets->contains($ticket)) {
+            $this->tickets->add($ticket);
+            $ticket->setFestivals($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTicket(Ticket $ticket): static
+    {
+        if ($this->tickets->removeElement($ticket)) {
+            // set the owning side to null (unless already changed)
+            if ($ticket->getFestivals() === $this) {
+                $ticket->setFestivals(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPhotoPath(): ?string
+    {
+        return $this->photo_path;
+    }
+
+    public function setPhotoPath(string $photo_path): static
+    {
+        $this->photo_path = $photo_path;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Code>
+     */
+    public function getCodes(): Collection
+    {
+        return $this->codes;
+    }
+
+    public function addCode(Code $code): static
+    {
+        if (!$this->codes->contains($code)) {
+            $this->codes->add($code);
+            $code->addFestival($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCode(Code $code): static
+    {
+        if ($this->codes->removeElement($code)) {
+            $code->removeFestival($this);
         }
 
         return $this;
