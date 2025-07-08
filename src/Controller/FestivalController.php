@@ -20,6 +20,7 @@ final class FestivalController extends AbstractController
     {
         return $this->render('festival/index.html.twig', [
             'festivals' => $festivalRepository->findAll(),
+            'nameAsc' => $festivalRepository->sortAscendingByName(),
         ]);
     }
 

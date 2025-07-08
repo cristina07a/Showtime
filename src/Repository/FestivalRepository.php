@@ -16,6 +16,14 @@ class FestivalRepository extends ServiceEntityRepository
         parent::__construct($registry, Festival::class);
     }
 
+    public function sortAscendingByName(): array
+    {
+        $builder = $this->createQueryBuilder('s');
+        $builder->select('s')
+            ->orderBy('s.name', 'ASC');
+
+        return $builder->getQuery()->getResult();
+    }
     //    /**
     //     * @return Festival[] Returns an array of Festival objects
     //     */
