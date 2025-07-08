@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Booking{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic font-bold text-center pt-4">Book festival {{ festival.name }}</h1>
+
+    {{ include('booking/_create.html.twig') }}
+
+    <div class="flex gap-2 mt-4 justify-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_home_user') }}'"> Choose another festival
+        </button>
+    </div>
+{% endblock %}

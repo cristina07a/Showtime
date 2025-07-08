@@ -1,0 +1,67 @@
+<div class="max-w-md mx-auto">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'space-y-6 bg-base-100 p-8 rounded-box border border-base-content/5 m-8'}}) }}
+
+    <!-- Festival Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Booking Festival</span>
+        </label>
+        {{ form_widget(form.festival, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter festival'
+            }
+        }) }}
+        {% if form.festival.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.festival.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Email</span>
+        </label>
+        {{ form_widget(form.email, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter email'
+            }
+        }) }}
+        {% if form.email.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.email.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- Full name Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Full name</span>
+        </label>
+        {{ form_widget(form.fullName, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter full name'
+            }
+        }) }}
+        {% if form.fullName.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.fullName.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+
+    <!-- Submit Button -->
+    <div class="form-control mt-6">
+        <button type="submit" class="btn btn-outline w-full">
+            {{ button_label|default('Save') }}
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+</div>

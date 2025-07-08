@@ -1,0 +1,45 @@
+{% extends 'base_user.html.twig' %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="overflow-x-auto">
+    <table class="table-pin-rows table">
+        <!-- head -->
+        <thead>
+        <tr>
+            <th>Name of the festival</th>
+            <th>Location</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Attending bands</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for festival in festivals %}
+        <tr class="hover:bg-base-300">
+            <td>{{ festival.name }}</td>
+            <td>{{ festival.location }}</td>
+            <td>{{ festival.startDate |date('d-m-Y') }}</td>
+            <td>{{ festival.endDate|date('d-m-Y') }}</td>
+            <td>{% for bands in festival.bands %}
+                    {{ bands.name|join(' ') }}{% endfor %}
+            </td>
+            </td>
+            <td>
+                <button class="btn btn-soft"
+                        onclick="window.location.href='{{ path('app_booking_create', {'id': festival.id}) }}'">
+                    Book now
+                </button>
+            </td>
+        </tr>
+        </tbody>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+
+        {% endblock %}

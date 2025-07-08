@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Booking index{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic text-center font-bold pt-4">Booking index</h1>
+
+    <div class="overflow-y-auto h-96 rounded-box border border-base-content/5 bg-base-100 m-8 ">
+        <table class="table-pin-rows table" id="bookingTable">
+            <thead>
+            <tr>
+                <th>Id
+                    <div class="btn-group ml-2">
+                        <button class="btn btn-xs btn-outline" onclick="sortTable(0, 'asc')">Asc</button>
+                        <button class="btn btn-xs btn-outline" onclick="sortTable(0, 'desc')">Desc</button>
+                    </div>
+                </th>
+                <th>Festival
+                    <div class="btn-group ml-2">
+                        <button class="btn btn-xs btn-outline" onclick="sortTable(1, 'asc')">Asc</button>
+                        <button class="btn btn-xs btn-outline" onclick="sortTable(1, 'desc')">Desc</button>
+                    </div>
+                </th>
+                <th>Email
+                    <div class="btn-group ml-2">
+                        <button class="btn btn-xs btn-outline" onclick="sortTable(2, 'asc')">Asc</button>
+                        <button class="btn btn-xs btn-outline" onclick="sortTable(2, 'desc')">Desc</button>
+                    </div>
+                </th>
+                <th>Full name
+                    <div class="btn-group ml-2">
+                        <button class="btn btn-xs btn-outline" onclick="sortTable(3, 'asc')">Asc</button>
+                        <button class="btn btn-xs btn-outline" onclick="sortTable(3, 'desc')">Desc</button>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for booking in bookings %}
+                <tr class="hover:bg-base-300">
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.festival.name }}</td>
+                    <td>{{ booking.email }}</td>
+                    <td>{{ booking.fullName }}</td>
+                    </td>
+                    <td>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_booking_show', {'id': booking.id}) }}'">
+                            Show
+                        </button>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_booking_edit', {'id': booking.id}) }}'">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_booking_new') }}'"> Create new
+        </button>
+    </div>
+    </div>
+    <script>
+        function sortTable(columnIndex, order) {
+            const table = document.getElementById('bookingTable');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            rows.sort((a, b) => {
+                let aValue = a.cells[columnIndex].textContent.trim(); //continutul
+                let bValue = b.cells[columnIndex].textContent.trim();
+
+                if (columnIndex === 0) {
+                    aValue = parseInt(aValue);
+                    bValue = parseInt(bValue);
+                }
+
+                if (order === 'asc') {
+                    return aValue > bValue ? 1 : -1; //1 - aValue primul, 0 - bValue primul
+                } else {
+                    return aValue < bValue ? 1 : -1; //1- bValue primul, 0 - aValue primul
+                }
+            });
+
+            tbody.innerHTML = '';
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    </script>
+{% endblock %}
