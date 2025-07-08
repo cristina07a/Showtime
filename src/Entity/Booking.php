@@ -15,11 +15,6 @@ class Booking
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'bookings')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Constraints\NotNull(message: 'Festival invalid!')]
-    private ?festival $festival = null;
-
     #[ORM\Column(length: 255)]
     #[Constraints\NotBlank(message: 'Introdu o adresa de mail!')]
     #[Constraints\Email(
