@@ -1,0 +1,61 @@
+<div class="max-w-md mx-auto">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'space-y-6 bg-base-100 p-8 rounded-box border border-base-content/5 m-8'}}) }}
+
+    <!-- Name Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Name</span>
+        </label>
+        {{ form_widget(form.name, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter name'
+            }
+        }) }}
+        {% if form.name.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.name.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- Percentage Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Percentage</span>
+        </label>
+        {{ form_widget(form.percentage, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter percentage'
+            }
+        }) }}
+        {% if form.percentage.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.percentage.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- isAvailable Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Is available</span>
+        </label>
+        {{ form_widget(form.isAvailable, {
+            'attr': {
+                'class': 'checkbox'
+            }
+        }) }}
+    </div>
+
+
+    <!-- Submit Button -->
+    <div class="form-control mt-6">
+        <button type="submit" class="btn btn-outline w-full">
+            {{ button_label|default('Save') }}
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+</div>

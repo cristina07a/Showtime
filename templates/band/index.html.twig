@@ -8,27 +8,12 @@
     <h1 class="text-xl italic text-center font-bold pt-4">Band index</h1>
 
     <div class="overflow-y-auto h-96 rounded-box border border-base-content/5 bg-base-100 m-8 ">
-        <table class="table-pin-rows table" id="bandsTable">
+        <table class="table-pin-rows table">
             <thead>
             <tr>
-                <th>Id
-                    <div class="btn-group ml-2">
-                        <button class="btn btn-xs btn-outline" onclick="sortTable(0, 'asc')">Asc</button>
-                        <button class="btn btn-xs btn-outline" onclick="sortTable(0, 'desc')">Desc</button>
-                    </div>
-                </th>
-                <th>Name
-                    <div class="btn-group ml-2">
-                        <button class="btn btn-xs btn-outline" onclick="sortTable(1, 'asc')">Asc</button>
-                        <button class="btn btn-xs btn-outline" onclick="sortTable(1, 'desc')">Desc</button>
-                    </div>
-                </th>
-                <th>genre
-                    <div class="btn-group ml-2">
-                        <button class="btn btn-xs btn-outline" onclick="sortTable(2, 'asc')">Asc</button>
-                        <button class="btn btn-xs btn-outline" onclick="sortTable(2, 'desc')">Desc</button>
-                    </div>
-                </th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>genre</th>
                 <th>actions</th>
             </tr>
             </thead>
@@ -61,31 +46,5 @@
         </button>
     </div>
     </div>
-
-    <script>
-        function sortTable(columnIndex, order) {
-            const table = document.getElementById('bandsTable');
-            const tbody = table.querySelector('tbody');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-
-            rows.sort((a, b) => {
-                let aValue = a.cells[columnIndex].textContent.trim(); //continutul
-                let bValue = b.cells[columnIndex].textContent.trim();
-
-                if (columnIndex === 0) {
-                    aValue = parseInt(aValue);
-                    bValue = parseInt(bValue);
-                }
-
-                if (order === 'asc') {
-                    return aValue > bValue ? 1 : -1; //1 - aValue primul, 0 - bValue primul
-                } else {
-                    return aValue < bValue ? 1 : -1; //1- bValue primul, 0 - aValue primul
-                }
-            });
-
-            tbody.innerHTML = '';
-            rows.forEach(row => tbody.appendChild(row));
-        }
-    </script>
+    
 {% endblock %}

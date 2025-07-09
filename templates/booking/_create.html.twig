@@ -6,15 +6,15 @@
         <label class="label">
             <span class="label-text font-semibold">Email</span>
         </label>
-        {{ form_widget(form.email, {
+        {{ form_widget(form.bookingEmail, {
             'attr': {
                 'class': 'input input-bordered w-full',
                 'placeholder': 'Enter email'
             }
         }) }}
-        {% if form.email.vars.errors|length > 0 %}
+        {% if form.bookingEmail.vars.errors|length > 0 %}
             <label class="label">
-                <span class="label-text-alt text-error">{{ form.email.vars.errors[0].message }}</span>
+                <span class="label-text-alt text-error">{{ form.bookingEmail.vars.errors[0].message }}</span>
             </label>
         {% endif %}
     </div>
@@ -33,6 +33,41 @@
         {% if form.fullName.vars.errors|length > 0 %}
             <label class="label">
                 <span class="label-text-alt text-error">{{ form.fullName.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- Paid Amount Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Paid amount</span>
+        </label>
+        {{ form_widget(form.paidAmount, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter paid amount'
+            }
+        }) }}
+        {% if form.paidAmount.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.paidAmount.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- User Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Alege utilizator</span>
+        </label>
+        {{ form_widget(form.user, {
+            'attr': {
+                'class': 'select select-bordered w-full'
+            }
+        }) }}
+        {% if form.user.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.user.vars.errors[0].message }}</span>
             </label>
         {% endif %}
     </div>

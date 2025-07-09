@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Code{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic font-bold text-center pt-4">Code with index {{ code.id }}</h1>
+
+    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-8">
+        <table class="table table-zebra">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ code.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ code.name }}</td>
+            </tr>
+            <tr>
+                <th>Percentage</th>
+                <td>{{ code.percentage }}</td>
+            </tr>
+            <tr>
+                <th>isAvailable</th>
+                <td>{{ code.isAvailable }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="flex gap-2 mt-4 justify-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_code_index') }}'"> Back to list
+        </button>
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_code_edit', {'id': code.id}) }}'"> Edit
+        </button>
+        {{ include('code/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

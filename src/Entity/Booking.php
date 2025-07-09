@@ -6,7 +6,6 @@ use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints;
 
-
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
 {
@@ -16,11 +15,10 @@ class Booking
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Constraints\NotBlank(message: 'Introdu o adresa de mail!')]
     #[Constraints\Email(
         message: 'Emailul {{ value }} nu este valid!',
     )]
-    private ?string $email = null;
+    private ?string $bookingEmail = null;
 
     #[ORM\Column(length: 255)]
     #[Constraints\NotBlank(message: 'Introdu un nume!')]
@@ -35,10 +33,12 @@ class Booking
     #[ORM\Column]
     private ?float $paidAmount = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?ticket $tickets = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ticket $ticket = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?user $user = null;
 
 
@@ -47,26 +47,14 @@ class Booking
         return $this->id;
     }
 
-    public function getFestival(): ?festival
+    public function getBookingEmail(): ?string
     {
-        return $this->festival;
+        return $this->bookingEmail;
     }
 
-    public function setFestival(?festival $festival): static
+    public function setBookingEmail(string $bookingEmail): static
     {
-        $this->festival = $festival;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
+        $this->bookingEmail = $bookingEmail;
 
         return $this;
     }
@@ -95,14 +83,14 @@ class Booking
         return $this;
     }
 
-    public function getTickets(): ?ticket
+    public function getTicket(): ?ticket
     {
-        return $this->tickets;
+        return $this->ticket;
     }
 
-    public function setTickets(?ticket $tickets): static
+    public function setTicket(?ticket $ticket): static
     {
-        $this->tickets = $tickets;
+        $this->ticket = $ticket;
 
         return $this;
     }

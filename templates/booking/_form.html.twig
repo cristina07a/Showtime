@@ -1,41 +1,56 @@
 <div class="max-w-md mx-auto">
     {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'space-y-6 bg-base-100 p-8 rounded-box border border-base-content/5 m-8'}}) }}
 
-    <!-- Festival Field -->
+
+    <!-- Ticket Field -->
     <div class="form-control w-full">
         <label class="label">
-            <span class="label-text font-semibold">Booking Festival</span>
+            <span class="label-text font-semibold">Booking Ticket</span>
         </label>
-        {{ form_widget(form.festival, {
+        {{ form_widget(form.ticket, {
             'attr': {
                 'class': 'input input-bordered w-full',
-                'placeholder': 'Enter festival'
+                'placeholder': 'Enter ticket'
             }
         }) }}
-        {% if form.festival.vars.errors|length > 0 %}
+        {% if form.ticket.vars.errors|length > 0 %}
             <label class="label">
-                <span class="label-text-alt text-error">{{ form.festival.vars.errors[0].message }}</span>
+                <span class="label-text-alt text-error">{{ form.ticket.vars.errors[0].message }}</span>
             </label>
         {% endif %}
     </div>
 
     <!-- Email Field -->
+    <!-- User Email Field -->
     <div class="form-control w-full">
         <label class="label">
-            <span class="label-text font-semibold">Email</span>
+            <span class="label-text font-semibold">User (select email)</span>
         </label>
-        {{ form_widget(form.email, {
+        {{ form_widget(form.user, {
             'attr': {
                 'class': 'input input-bordered w-full',
-                'placeholder': 'Enter email'
+                'placeholder': 'Select user'
             }
         }) }}
-        {% if form.email.vars.errors|length > 0 %}
+    </div>
+
+    <!-- Booking Email Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Booking email</span>
+        </label>
+        {{ form_widget(form.bookingEmail, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+            }
+        }) }}
+        {% if form.bookingEmail.vars.errors|length > 0 %}
             <label class="label">
-                <span class="label-text-alt text-error">{{ form.email.vars.errors[0].message }}</span>
+                <span class="label-text-alt text-error">{{ form.bookingEmail.vars.errors[0].message }}</span>
             </label>
         {% endif %}
     </div>
+
 
     <!-- Full name Field -->
     <div class="form-control w-full">
@@ -51,6 +66,25 @@
         {% if form.fullName.vars.errors|length > 0 %}
             <label class="label">
                 <span class="label-text-alt text-error">{{ form.fullName.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+
+    <!-- Paid Amount Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Paid amount</span>
+        </label>
+        {{ form_widget(form.paidAmount, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter paid amount'
+            }
+        }) }}
+        {% if form.paidAmount.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.paidAmount.vars.errors[0].message }}</span>
             </label>
         {% endif %}
     </div>

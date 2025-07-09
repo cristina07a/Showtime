@@ -3,17 +3,30 @@
 namespace App\Form;
 
 use App\Entity\Booking;
+use App\Entity\Ticket;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class BookingCreateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            ->add('fullName');
+            ->add('bookingEmail')
+            ->add('fullName')
+            ->add('paidAmount')
+            ->add('ticket', EntityType::class, [
+                'class' => ticket::class,
+                'choice_label' => 'id',
+            ])
+            ->add('user', EntityType::class, [
+                'class' => user::class,
+                'choice_label' => 'id',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

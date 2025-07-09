@@ -17,11 +17,11 @@ class Ticket
     private ?string $type = null;
 
     #[ORM\Column]
-    private ?int $price = null;
+    private ?float $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?festival $festivals = null;
+    private ?festival $festival = null;
 
     public function getId(): ?int
     {
@@ -40,26 +40,26 @@ class Ticket
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 
         return $this;
     }
 
-    public function getFestivals(): ?festival
+    public function getFestival(): ?festival
     {
-        return $this->festivals;
+        return $this->festival;
     }
 
-    public function setFestivals(?festival $festivals): static
+    public function setFestival(?festival $festival): static
     {
-        $this->festivals = $festivals;
+        $this->festival = $festival;
 
         return $this;
     }

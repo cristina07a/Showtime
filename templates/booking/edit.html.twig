@@ -3,7 +3,8 @@
 {% block title %}Edit Booking{% endblock %}
 
 {% block content %}
-    <h1 class="text-xl italic font-bold text-center pt-4">Edit booking with index {{ booking.id }}</h1>
+    <h1 class="text-xl italic font-bold text-center pt-4">Edit ticket {{ ticket.id }} for
+        festival {{ ticket.festival.name }}</h1>
 
     {{ include('booking/_form.html.twig', {'button_label': 'Update'}) }}
 

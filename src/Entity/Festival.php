@@ -62,11 +62,11 @@ class Festival
     /**
      * @var Collection<int, Ticket>
      */
-    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'festivals')]
+    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'festival')]
     private Collection $tickets;
 
     #[ORM\Column(length: 255)]
-    private ?string $photo_path = null;
+    private ?string $photoPath = null;
 
     /**
      * @var Collection<int, Code>
@@ -223,12 +223,12 @@ class Festival
 
     public function getPhotoPath(): ?string
     {
-        return $this->photo_path;
+        return $this->photoPath;
     }
 
-    public function setPhotoPath(string $photo_path): static
+    public function setPhotoPath(string $photoPath): static
     {
-        $this->photo_path = $photo_path;
+        $this->photoPath = $photoPath;
 
         return $this;
     }

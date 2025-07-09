@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ticket{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic font-bold text-center pt-4">Ticket with index {{ ticket.id }}</h1>
+
+    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-8">
+        <table class="table table-zebra">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ticket.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ ticket.type }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ ticket.price }}</td>
+            </tr>
+            <tr>
+                <th>Festival</th>
+                <td>{{ ticket.festival.name }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="flex gap-2 mt-4 justify-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_ticket_index') }}'"> Back to list
+        </button>
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_ticket_edit', {'id': ticket.id}) }}'"> Edit
+        </button>
+        {{ include('ticket/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
-use App\Entity\Festival;
-use App\Form\BookingCreateType;
 use App\Form\BookingType;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,6 +30,11 @@ final class BookingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if (!$booking->getBookingEmail() && $booking->getUser()) {
+                $booking->setBookingEmail($booking->getUser()->getEmail());
+            }
+
             $entityManager->persist($booking);
             $entityManager->flush();
 
@@ -80,29 +83,5 @@ final class BookingController extends AbstractController
 
         return $this->redirectToRoute('app_booking_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    #[Route('/create/{id}', name: 'app_booking_create', methods: ['GET', 'POST'])]
-    public function create(Festival $festival, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        // festival/2/bookings
-        $booking = new Booking();
-        $booking->setFestival($festival);
-        $form = $this->createForm(BookingCreateType::class, $booking);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($booking);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_home_user', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('booking/create.html.twig', [
-            'booking' => $booking,
-            'form' => $form,
-            'festival' => $festival,
-        ]);
-    }
-
 
 }
