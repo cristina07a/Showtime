@@ -6,6 +6,7 @@ use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints;
 
+
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
 {
@@ -15,6 +16,7 @@ class Booking
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Constraints\NotBlank(message: 'Introdu o adresa de mail!')]
     #[Constraints\Email(
         message: 'Emailul {{ value }} nu este valid!',
     )]
@@ -31,6 +33,8 @@ class Booking
     private ?string $fullName = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Suma platita in format invalid')]
+    #[Assert\Positive(message: 'Suma platita trebuie sa fie pozitiva')]
     private ?float $paidAmount = null;
 
     #[ORM\ManyToOne]

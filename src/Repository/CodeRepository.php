@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Code;
+use App\Entity\Festival;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,6 +15,18 @@ class CodeRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Code::class);
+    }
+
+    public function findOneByNameAndFestival(string $name, Festival $festival): ?Code
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.festivals', 'f')
+            ->andWhere('c.name = :name')
+            ->andWhere('f.id = :festivalId')
+            ->setParameter('name', $name)
+            ->setParameter('festivalId', $festival->getId())
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     //    /**

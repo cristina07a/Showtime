@@ -16,6 +16,13 @@ class BookingRepository extends ServiceEntityRepository
         parent::__construct($registry, Booking::class);
     }
 
+    public function getOverallSales(): float
+    {
+        return array_sum(array_map(function (Booking $booking) {
+        }));
+    }
+
+
     //    /**
     //     * @return Booking[] Returns an array of Booking objects
     //     */

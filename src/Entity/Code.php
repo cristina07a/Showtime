@@ -6,6 +6,7 @@ use App\Repository\CodeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints;
 
 #[ORM\Entity(repositoryClass: CodeRepository::class)]
 class Code
@@ -16,12 +17,20 @@ class Code
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Constraints\NotNull(message: 'Introdu un nume!')]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Constraints\NotNull(message: 'Alege disponibilitatea')]
     private ?bool $isAvailable = null;
 
     #[ORM\Column]
+    #[Constraints\NotNull(message: 'Stabileste procentajul')]
+    #[Constraints\Range(
+        min: 0,
+        max: 100,
+        notInRangeMessage: 'Procentajul are valori cuprinse intre {{ min }} si {{ max }}.'
+    )]
     private ?int $percentage = null;
 
     /**
