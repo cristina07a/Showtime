@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ticket index{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic text-center font-bold pt-4">Ticket index</h1>
+
+    <div class="overflow-y-auto h-96 rounded-box border border-base-content/5 bg-base-100 m-8 ">
+        <table class="table-pin-rows table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Festival</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for ticket in tickets %}
+                <tr class="hover:bg-base-300">
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.type }}</td>
+                    <td>{{ ticket.price }}</td>
+                    <td>{{ ticket.festival.name }}</td>
+                    </td>
+                    <td>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_ticket_show', {'id': ticket.id}) }}'">
+                            Show
+                        </button>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_ticket_edit', {'id': ticket.id}) }}'">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_ticket_new') }}'"> Create new
+        </button>
+    </div>
+    </div>
+{% endblock %}

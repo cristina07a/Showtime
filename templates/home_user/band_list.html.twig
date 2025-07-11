@@ -1,0 +1,123 @@
+{% extends 'base_user.html.twig' %}
+
+{% block title %}Band index{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_upward,arrow_downward"/>
+
+    <form method="get" action="{{ path('app_band_show_for_user') }}" class="mt-2 mb-4 text-center">
+        <input
+            type="text"
+            name="search"
+            placeholder="Search for an artist"
+            value="{{ search }}"
+            class="input input-bordered w-1/3"
+        />
+        <button type="submit" class="btn btn-primary ml-2">Cauta</button>
+    </form>
+
+    <div class="flex gap-4 m-8">
+        <div class="flex-1">
+            <h2 class="mb-4 text-xl font-semibold">All Artists</h2>
+            <div class="overflow-y-auto max-h-[18rem] rounded-box border border-base-content/5 bg-base-100 text-sm">
+                <table class="table table-sm table-pin-rows">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Genre</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for band in bands %}
+                        <tr class="hover:bg-base-300">
+                            <td>{{ band.id }}</td>
+                            <td>{{ band.name }}</td>
+                            <td>{{ band.musicGenre.value }}</td>
+                            <td>
+                                {% if app.user %}
+                                    <button class="btn btn-outline btn-sm toggle-wishlist-btn"
+                                            data-band-id="{{ band.id }}">
+                                        {{ app.user.bands.contains(band) ? 'Remove from wishlist' : 'Add to wishlist' }}
+                                    </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="divider divider-horizontal"></div>
+
+        <div class="flex-1">
+            {% if recommendedBands is defined and recommendedBands|length > 0 %}
+                <h2 class="mb-4 text-xl font-semibold">Recommended Artists</h2>
+                <div class="overflow-y-auto max-h-[18rem] rounded-box border border-base-content/5 bg-base-100">
+                    <table class="table table-sm table-pin-rows">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Genre</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for band in recommendedBands %}
+                            <tr class="hover:bg-base-300">
+                                <td>{{ band.id }}</td>
+                                <td>{{ band.name }}</td>
+                                <td>{{ band.musicGenre.value }}</td>
+                                <td>
+                                    {% if app.user %}
+                                        <button class="btn btn-outline btn-sm toggle-wishlist-btn"
+                                                data-band-id="{{ band.id }}">
+                                            Add to wishlist
+                                        </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">No recommendations found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center text-base-content/60 mt-16">
+                    <p>No recommendations available</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.toggle-wishlist-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                const bandId = button.dataset.bandId;
+
+                const response = await fetch(`/wishlist/toggle/${bandId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+                button.textContent = result.inWishlist ? 'Remove from wishlist' : 'Add to wishlist';
+            });
+        });
+    </script>
+
+{% endblock %}

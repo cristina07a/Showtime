@@ -12,21 +12,36 @@
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
-<body>
+<body class="text-lg">
 {% block body %}
     <div class="min-h-screen grid grid-cols-[250px_1fr]">
         <aside class="bg-base-200 p-4">
-            <h2 class="text-xl font-bold mb-4">Menu</h2>
-            <ul class="menu">
-                <li><a href="/admin">Admin</a></li>
-                <li><a href="/admin">Wishlist</a></li>
-                <li><a href="/list/bands">Bands</a></li>
+            <h2 class="text-2xl font-bold mb-6">Menu</h2>
+            <ul class="menu space-y-2 text-lg">
+                {% if app.user %}
+                    <li>
+                        <a href="{{ path('app_user_wishlist', {'id': app.user.id}) }}" class="hover:underline">
+                            Wishlist
+                        </a>
+                    </li>
+                {% endif %}
+                <li><a href="/list/bands" class="hover:underline">Bands</a></li>
+                <li><a href="/user" class="hover:underline">Festivals</a></li>
             </ul>
+
         </aside>
 
         <div class="flex flex-col">
-            <header class="bg-base-100 p-4 shadow">
+            <header class="bg-base-100 p-4 shadow flex justify-between items-center">
                 <h1 class="text-2xl font-bold">User homepage</h1>
+                <div>
+                    {% if app.user %}
+                        You are logged in as {{ app.user.email }} |
+                        <a href="{{ path('app_logout') }}">Logout</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Login</a>
+                    {% endif %}
+                </div>
             </header>
 
             <main class="p-6 flex-1">

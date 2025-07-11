@@ -24,6 +24,17 @@ class FestivalRepository extends ServiceEntityRepository
 
         return $builder->getQuery()->getResult();
     }
+
+    public function findByName(string $search): array
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.name LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('f.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Festival[] Returns an array of Festival objects
     //     */

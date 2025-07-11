@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Code index{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic text-center font-bold pt-4">Code index</h1>
+
+    <div class="overflow-y-auto h-96 rounded-box border border-base-content/5 bg-base-100 m-8 ">
+        <table class="table-pin-rows table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Percentage</th>
+                <th>Is available</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for code in codes %}
+                <tr class="hover:bg-base-300">
+                    <td>{{ code.id }}</td>
+                    <td>{{ code.name }}</td>
+                    <td>{{ code.percentage }}</td>
+                    <td>{{ code.isAvailable }}</td>
+                    </td>
+                    <td>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_code_show', {'id': code.id}) }}'">
+                            Show
+                        </button>
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_code_edit', {'id': code.id}) }}'">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_code_new') }}'"> Create new
+        </button>
+    </div>
+    </div>
+{% endblock %}

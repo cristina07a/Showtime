@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 
-#[Route('/festival')]
+#[Route('/admin/festival')]
 final class FestivalController extends AbstractController
 {
     #[Route(name: 'app_festival_index', methods: ['GET'])]
@@ -20,7 +20,6 @@ final class FestivalController extends AbstractController
     {
         return $this->render('festival/index.html.twig', [
             'festivals' => $festivalRepository->findAll(),
-            'nameAsc' => $festivalRepository->sortAscendingByName(),
         ]);
     }
 
@@ -30,20 +29,29 @@ final class FestivalController extends AbstractController
         $festival = new Festival();
         $form = $this->createForm(FestivalType::class, $festival);
         $form->handleRequest($request);
-        #dd($festival, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $photoFile = $form->get('photoPath')->getData();
+
+            if ($photoFile) {
+                $newFilename = uniqid() . '.' . $photoFile->guessExtension();
+                $uploadDirectory = $this->getParameter('uploads_directory');
+                $photoFile->move($uploadDirectory, $newFilename);
+                $festival->setPhotoPath($newFilename);
+            }
+
             $entityManager->persist($festival);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_festival_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_festival_index');
         }
 
         return $this->render('festival/new.html.twig', [
-            'festival' => $festival,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_festival_show', methods: ['GET'])]
     public function show(Festival $festival): Response
@@ -53,8 +61,6 @@ final class FestivalController extends AbstractController
         ]);
     }
 
-
-    #############################
     #[Route('/{id}/edit', name: 'app_festival_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Festival $festival, EntityManagerInterface $entityManager): Response
     {
@@ -62,6 +68,18 @@ final class FestivalController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $photoFile = $form->get('photoPath')->getData();
+
+            if ($photoFile) {
+
+                $newFilename = uniqid() . '.' . $photoFile->guessExtension();
+                $uploadDirectory = $this->getParameter('uploads_directory');
+                $photoFile->move($uploadDirectory, $newFilename);
+                $festival->setPhotoPath($newFilename);
+
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_festival_index', [], Response::HTTP_SEE_OTHER);

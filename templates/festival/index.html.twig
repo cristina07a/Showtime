@@ -10,6 +10,7 @@
             <thead>
             <tr>
                 <th>Id</th>
+                <th>Photo</th>
                 <th>Name</th>
                 <th>location</th>
                 <th>start_date</th>
@@ -22,12 +23,22 @@
             {% for festival in festivals %}
                 <tr class="hover:bg-base-300">
                     <td>{{ festival.id }}</td>
+                    <td>
+                        {% if festival.photoPath %}
+                            <img src="{{ asset('uploads/' ~ festival.photoPath) }}" alt="Festival Photo"
+                                 style="width: 60px; height: auto; border-radius: 4px;"/>
+                        {% else %}
+                            <span>No photo</span>
+                        {% endif %}
+                    </td>
                     <td>{{ festival.name }}</td>
                     <td>{{ festival.location }}</td>
                     <td>{{ festival.startDate |date('d-m-Y') }}</td>
                     <td>{{ festival.endDate|date('d-m-Y') }}</td>
-                    <td>{% for bands in festival.bands %}
-                            {{ bands.name|join(' ') }}{% endfor %}
+                    <td> {% for band in festival.bands|slice(0, 5) %}
+                            {{ band.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                        {% if festival.bands|length > 5 %} ...{% endif %}
                     </td>
                     </td>
                     <td>

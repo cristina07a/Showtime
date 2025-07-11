@@ -1,0 +1,73 @@
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label == 'success' ? 'success' : 'danger' }} mb-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<div class="max-w-md mx-auto">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'space-y-6 bg-base-100 p-8 rounded-box border border-base-content/5 m-8'}}) }}
+
+    <!-- Full name Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Full name</span>
+        </label>
+        {{ form_widget(form.fullName, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter full name'
+            }
+        }) }}
+        {% if form.fullName.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.fullName.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- Paid Amount Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Paid amount</span>
+        </label>
+        {{ form_widget(form.paidAmount, {
+            'attr': {
+                'class': 'input input-bordered w-full bg-gray-100 text-gray-500 cursor-not-allowed',
+                'readonly': true
+            }
+        }) }}
+        {% if form.paidAmount.vars.errors|length > 0 %}
+            <label class="label">
+                <span class="label-text-alt text-error">{{ form.paidAmount.vars.errors[0].message }}</span>
+            </label>
+        {% endif %}
+    </div>
+
+    <!-- Sale Code Field -->
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Do you have a code?</span>
+        </label>
+        {{ form_widget(form.code, {
+            'attr': {
+                'class': 'input input-bordered w-full',
+                'placeholder': 'Enter code'
+            }
+        }) }}
+    </div>
+    <button type="submit" name="apply_code" class="btn btn-outline w-full mb-4">
+        Add Code
+    </button>
+
+
+    <!-- Submit Button -->
+    <div class="form-control mt-6">
+        <button type="submit" class="btn btn-outline w-full">
+            {{ button_label|default('Book') }}
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+</div>

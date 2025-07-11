@@ -1,0 +1,36 @@
+{% extends 'base_user.html.twig' %}
+
+{% block title %}Ticket{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic font-bold text-center pt-4">Available tickets for {{ festival.name }}</h1>
+
+    <div class="flex flex-wrap gap-6 m-8">
+        {% for ticket in tickets %}
+            <div class="card bg-info-content w-72">
+                <div class="card-body">
+                    <h2 class="card-title">{{ ticket.type }}</h2>
+                    <p>Price: {{ ticket.price }}</p>
+                    <div class="card-actions justify-center">
+                        <button class="btn btn-soft"
+                                onclick="window.location.href='{{ path('app_booking_create', {'id': ticket.id}) }}'">
+                            Book now
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No tickets found for this festival.</p>
+        {% endfor %}
+    </div>
+
+
+
+    <div class="flex gap-2 mt-4 justify-center">
+        <button class="btn btn-soft"
+                onclick="window.location.href='{{ path('app_home_user') }}'"> Back to all festivals
+        </button>
+
+    </div>
+{% endblock %}

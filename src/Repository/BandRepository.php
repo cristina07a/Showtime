@@ -16,7 +16,17 @@ class BandRepository extends ServiceEntityRepository
         parent::__construct($registry, Band::class);
     }
 
-    
+    public function findByName(string $search): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.name LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('b.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
     //    /**
     //     * @return Band[] Returns an array of Band objects

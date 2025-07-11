@@ -16,7 +16,6 @@ class Booking
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Constraints\NotBlank(message: 'Introdu o adresa de mail!')]
     #[Constraints\Email(
         message: 'Emailul {{ value }} nu este valid!',
     )]

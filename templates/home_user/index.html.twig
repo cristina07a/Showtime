@@ -3,45 +3,88 @@
 {% block title %}User Dashboard{% endblock %}
 
 {% block content %}
+    <form method="get" action="{{ path('app_home_user') }}" class="mt-2 mb-4 text-center">
+        <input
+            type="text"
+            name="search"
+            placeholder="Search for a festival"
+            value="{{ search }}"
+            class="input input-bordered w-1/3"
+        />
+        <button type="submit" class="btn btn-primary ml-2">Cauta</button>
+    </form>
 
-    <div class="overflow-x-auto">
-        <table class="table-pin-rows table">
-            <thead>
-            <tr>
-                <th>Name of the festival</th>
-                <th>Location</th>
-                <th>Start date</th>
-                <th>End date</th>
-                <th>Attending bands</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for festival in festivals %}
-            <tr class="hover:bg-base-300">
-                <td>{{ festival.name }}</td>
-                <td>{{ festival.location }}</td>
-                <td>{{ festival.startDate |date('d-m-Y') }}</td>
-                <td>{{ festival.endDate|date('d-m-Y') }}</td>
-                <td>{% for bands in festival.bands %}
-                        {{ bands.name|join(' ') }}{% endfor %}
-                </td>
-                </td>
-                <td>
-                    <button class="btn btn-soft"
-                            onclick="window.location.href='{{ path('app_ticket_show_for_festival', {'id': festival.id}) }}'">
-                        Check tickets
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-            {% else %}
-                <tr>
-                    <td colspan="4">no records found</td>
-                </tr>
+    {% if recommendedFestivals is not empty %}
+        <h2 class="mt-8 mb-4 text-xl font-semibold">Festivals you must attend</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
+            {% for festival in recommendedFestivals %}
+                <div
+                    class="card bg-base-100 shadow-md cursor-pointer hover:shadow-lg transition"
+                    onclick="window.location.href='{{ path('app_ticket_show_for_festival', {'id': festival.id}) }}'"
+                >
+                    {% if festival.photoPath %}
+                        <figure>
+                            <img src="{{ asset('uploads/' ~ festival.photoPath) }}" alt="{{ festival.name }}"
+                                 class="h-48 w-full object-cover rounded-t-lg"/>
+                        </figure>
+                    {% else %}
+                        <figure>
+                            <img src="{{ asset('uploads/' ~ festival.photoPath) }}" alt="{{ festival.name }}"
+                                 class="h-20 w-48 object-contain rounded-t-lg bg-gray-100"/>
+                        </figure>
+                    {% endif %}
+                    <div class="card-body">
+                        <h2 class="card-title">{{ festival.name }}</h2>
+                        <p><strong>Location:</strong> {{ festival.location }}</p>
+                        <p><strong>Duration:</strong>
+                            {{ festival.startDate|date('d-m-Y') }} - {{ festival.endDate|date('d-m-Y') }}
+                        </p>
+                        <div class="card-actions justify-center mt-4">
+                            <button class="btn btn-outline btn-sm">Check tickets</button>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
+        </div>
+    {% endif %}
 
-
-        </table>
+    <h2 class="mt-8 mb-4 text-xl font-semibold">All upcoming festivals</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for festival in festivals %}
+            <div
+                class="card bg-base-100 shadow-md cursor-pointer hover:shadow-lg transition"
+                onclick="window.location.href='{{ path('app_ticket_show_for_festival', {'id': festival.id}) }}'"
+            >
+                {% if festival.photoPath %}
+                    <figure>
+                        <img src="{{ asset('uploads/' ~ festival.photoPath) }}" alt="{{ festival.name }}"
+                             class="h-48 w-full object-cover rounded-t-lg"/>
+                    </figure>
+                {% endif %}
+                <div class="card-body">
+                    <h2 class="card-title">{{ festival.name }}</h2>
+                    <p><strong>Location:</strong> {{ festival.location }}</p>
+                    <p>
+                        {{ festival.startDate|date('d-m-Y') }} - {{ festival.endDate|date('d-m-Y') }}
+                    </p>
+                    <p><strong>Attending bands:</strong>
+                        {% for band in festival.bands|slice(0, 5) %}
+                            {{ band.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                        {% if festival.bands|length > 5 %}...{% endif %}
+                    </p>
+                    <div class="card-actions justify-center mt-4">
+                        <button class="btn btn-outline btn-sm">
+                            Check tickets
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No festivals found.</p>
+        {% endfor %}
     </div>
+
+
 {% endblock %}
+

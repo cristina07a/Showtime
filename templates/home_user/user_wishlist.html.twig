@@ -1,0 +1,59 @@
+{% extends 'base_user.html.twig' %}
+
+{% block title %}Wishlist for {{ user.email }}{% endblock %}
+
+{% block content %}
+    <h1 class="text-xl italic text-center font-bold pt-4 mb-4">Wishlist for {{ user.email }}</h1>
+
+    {% if bands|length > 0 %}
+        <table class="table w-full">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Genre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for band in bands %}
+                <tr>
+                    <td>{{ band.id }}</td>
+                    <td>{{ band.name }}</td>
+                    <td>{{ band.musicGenre.value }}</td>
+                    <td>
+                        <button class="btn toggle-wishlist-btn" data-band-id="{{ band.id }}">
+                            Remove from wishlist
+                        </button>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center italic">No bands in wishlist.</p>
+    {% endif %}
+    <script>
+        document.querySelectorAll('.toggle-wishlist-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                const bandId = button.dataset.bandId;
+
+                const response = await fetch(`/wishlist/toggle/${bandId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+                if (result.inWishlist === false) {
+                    button.closest('tr').remove();
+                } else {
+                    button.textContent = 'Remove from wishlist';
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

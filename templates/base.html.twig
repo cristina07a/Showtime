@@ -14,19 +14,18 @@
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
-<body>
+<body class="text-lg">
 {% block body %}
     <div class="min-h-screen grid grid-cols-[250px_1fr]">
         <aside class="bg-base-200 p-4">
-            <h2 class="text-xl font-bold mb-4">Menu</h2>
-            <ul class="menu">
-                <li><a href="/band">Bands</a></li>
-                <li><a href="/festival">Festival</a></li>
-                <li><a href="/booking">Booking</a></li>
-                <li><a href="/ticket">Ticket</a></li>
-                <li><a href="/code">Code</a></li>
-                <li><a href="/code">User</a></li>
-                <li><a href="/user">Home page user</a></li>
+            <h2 class="text-2xl font-bold mb-6">Menu</h2>
+            <ul class="menu space-y-2 text-lg">
+                <li><a href="/admin/band" class="hover:underline">Bands</a></li>
+                <li><a href="/admin/festival" class="hover:underline">Festival</a></li>
+                <li><a href="/admin/booking" class="hover:underline">Booking</a></li>
+                <li><a href="/admin/ticket" class="hover:underline">Ticket</a></li>
+                <li><a href="/admin/code" class="hover:underline">Code</a></li>
+                <li><a href="/user" class="hover:underline">Home page user</a></li>
             </ul>
         </aside>
 

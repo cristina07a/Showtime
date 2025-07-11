@@ -74,9 +74,6 @@ class Festival
     #[ORM\ManyToMany(targetEntity: Code::class, mappedBy: 'festivals')]
     private Collection $codes;
 
-    #[ORM\Column(length: 255)]
-    private ?string $photo = null;
-
     public function __construct()
     {
         $this->bands = new ArrayCollection();
@@ -263,15 +260,4 @@ class Festival
         return $this;
     }
 
-    public function getPhoto(): ?string
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto(string $photo): static
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
 }
